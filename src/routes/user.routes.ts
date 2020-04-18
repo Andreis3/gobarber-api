@@ -16,7 +16,9 @@ appointmentsRoutes.post('/', async (request, response) => {
       password,
     });
 
-    return response.status(201).json(user);
+    const { id } = user;
+
+    return response.status(201).json({ id, name, email });
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }
