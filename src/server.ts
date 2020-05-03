@@ -16,6 +16,17 @@ app.use(cors());
 app.use(express.json());
 app.use('/files', express.static(uploadConfig.directory));
 
+function logRequests(request: Request, response: Response, next: NextFunction) {
+  const { method, url } = request;
+
+  const logLabel = `[${method.toUpperCase()}] ${url}`;
+  console.time(logLabel);
+  next();
+  console.timeEnd(logLabel);
+}
+
+app.use(logRequests);
+
 app.use(routes);
 
 app.use(
