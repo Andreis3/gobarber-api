@@ -48,5 +48,5 @@ app.use(
 const port = 3333;
 
 app.listen(port, () => {
-  console.log(`🚀 Runing service in port: ${port}`);
+  console.log(`🚀 Runing service in route: http://localhost:${port}`);
 });
