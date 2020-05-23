@@ -5,6 +5,14 @@ import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHa
 
 import AppError from '@shared/errors/AppError';
 
+interface IUserToken {
+  id: string;
+  token: string;
+  user_id: string;
+  created_at: Date;
+  update_at: Date;
+}
+
 let fakeUserRepository: FakeUserRepository;
 let fakeUserTokensRepository: FakeUserTokensRepository;
 let resetPasswordService: ResetPasswordService;
