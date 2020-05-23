@@ -5,16 +5,22 @@ import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarSer
 
 import AppError from '@shared/errors/AppError';
 
-describe('UpdateUserAvatarService', () => {
-  it('Should be able to create a new appointment', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeStorageProvider = new FakeStorageProvider();
+let fakeUserRepository: FakeUserRepository;
+let fakeStorageProvider: FakeStorageProvider;
 
-    const updateUserAvatar = new UpdateUserAvatarService(
+let updateUserAvatar: UpdateUserAvatarService;
+
+describe('UpdateUserAvatarService', () => {
+  beforeEach(() => {
+    fakeUserRepository = new FakeUserRepository();
+    fakeStorageProvider = new FakeStorageProvider();
+
+    updateUserAvatar = new UpdateUserAvatarService(
       fakeUserRepository,
       fakeStorageProvider,
     );
-
+  });
+  it('Should be able to create a new appointment', async () => {
     const user = await fakeUserRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -30,14 +36,6 @@ describe('UpdateUserAvatarService', () => {
   });
 
   it('Should not be able to update from non existing user', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeStorageProvider = new FakeStorageProvider();
-
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUserRepository,
-      fakeStorageProvider,
-    );
-
     expect(
       updateUserAvatar.execute({
         user_id: 'non-existing-user',
@@ -47,15 +45,7 @@ describe('UpdateUserAvatarService', () => {
   });
 
   it('Should delete old avatar when updating new one', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeStorageProvider = new FakeStorageProvider();
-
     const deleteFile = jest.spyOn(fakeStorageProvider, 'deleteFile');
-
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUserRepository,
-      fakeStorageProvider,
-    );
 
     const user = await fakeUserRepository.create({
       name: 'John Doe',

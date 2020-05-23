@@ -4,16 +4,21 @@ import CreateUserServices from '@modules/users/services/CreateUserServices';
 
 import AppError from '@shared/errors/AppError';
 
-describe('CreateAppointmentService', () => {
-  it('Should be able to create a new user', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
+let fakeUserRepository: FakeUserRepository;
+let fakeHashProvider: FakeHashProvider;
+let createUserServices: CreateUserServices;
 
-    const createUserServices = new CreateUserServices(
+describe('CreateAppointmentService', () => {
+  beforeEach(() => {
+    fakeUserRepository = new FakeUserRepository();
+    fakeHashProvider = new FakeHashProvider();
+
+    createUserServices = new CreateUserServices(
       fakeUserRepository,
       fakeHashProvider,
     );
-
+  });
+  it('Should be able to create a new user', async () => {
     const user = await createUserServices.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',
@@ -25,14 +30,6 @@ describe('CreateAppointmentService', () => {
   });
 
   it('Should not be able to create a new user with same email from another', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-
-    const createUserServices = new CreateUserServices(
-      fakeUserRepository,
-      fakeHashProvider,
-    );
-
     await createUserServices.execute({
       name: 'John Doe',
       email: 'johndoe@example.com',

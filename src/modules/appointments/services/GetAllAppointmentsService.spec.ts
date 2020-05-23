@@ -3,18 +3,23 @@ import CreateAppointmentService from '@modules/appointments/services/CreateAppoi
 
 import GetAllAppointmentsService from '@modules/appointments/services/GetAllAppointmentsService';
 
+let fakeAppointmentsRepository: FakeAppointmentsRepository;
+let createAppointmentService: CreateAppointmentService;
+
+let getAllAppointmentsService: GetAllAppointmentsService;
+
 describe('GetAllAppointmentsService', () => {
+  beforeEach(() => {
+    fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    createAppointmentService = new CreateAppointmentService(
+      fakeAppointmentsRepository,
+    );
+    getAllAppointmentsService = new GetAllAppointmentsService(
+      fakeAppointmentsRepository,
+    );
+  });
+
   it.only('Should return a list of appointments', async () => {
-    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
-
-    const createAppointmentService = new CreateAppointmentService(
-      fakeAppointmentsRepository,
-    );
-
-    const getAllAppointmentsService = new GetAllAppointmentsService(
-      fakeAppointmentsRepository,
-    );
-
     await createAppointmentService.execute({
       date: new Date('2021-05-15T02:00:00.000Z'),
       provider_id: '123456781',
