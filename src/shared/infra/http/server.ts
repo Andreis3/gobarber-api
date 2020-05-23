@@ -15,7 +15,7 @@ const app = express();
 app.use(cors());
 
 app.use(express.json());
-app.use('/files', express.static(uploadConfig.directory));
+app.use('/files', express.static(uploadConfig.uploadFolder));
 
 function logRequests(request: Request, response: Response, next: NextFunction) {
   const { method, url } = request;
@@ -38,10 +38,10 @@ app.use(
         message: err.message,
       });
     }
-
     return response.status(500).json({
       status: 'error',
-      massage: 'Internal server error',
+      message: 'Internal server error',
+      stack: err.stack,
     });
   },
 );
