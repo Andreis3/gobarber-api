@@ -8,18 +8,18 @@ import uploadConfig from '@config/upload';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
-const appointmentsRoutes = Router();
+const userRoutes = Router();
 const userController = new UserController();
 const userAvatarController = new UserAvatarController();
 const upload = multer(uploadConfig);
 
-appointmentsRoutes.post('/', userController.createUser);
+userRoutes.post('/', userController.createUser);
 
-appointmentsRoutes.patch(
+userRoutes.patch(
   '/avatar',
   ensureAuthenticated,
   upload.single('avatar'),
   userAvatarController.updateUserAvatar,
 );
 
-export default appointmentsRoutes;
+export default userRoutes;
