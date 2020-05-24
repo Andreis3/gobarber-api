@@ -18,9 +18,11 @@ class UserController {
       password,
     });
 
-    const { id } = user;
+    const { id, created_at, updated_at } = user;
 
-    return response.status(201).json({ id, name, email });
+    return response
+      .status(201)
+      .json({ id, name, email, created_at, updated_at });
   }
 }
 
