@@ -12,6 +12,7 @@ class AppointmentsController {
     response: Response,
   ): Promise<Response> {
     const { provider_id, date } = request.body;
+    const user_id = request.user.id;
 
     const parseDate = parseISO(date);
 
@@ -19,12 +20,13 @@ class AppointmentsController {
 
     const appointment = await createdAppointment.execute({
       provider_id,
+      user_id,
       date: parseDate,
     });
 
     const { id } = appointment;
 
-    return response.status(201).json({ id, provider_id, date });
+    return response.status(201).json({ id, provider_id, date, user_id });
   }
 
   public async findAllAppointments(

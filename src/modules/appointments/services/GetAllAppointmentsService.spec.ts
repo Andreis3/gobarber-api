@@ -22,11 +22,13 @@ describe('GetAllAppointmentsService', () => {
   it.only('Should return a list of appointments', async () => {
     await createAppointmentService.execute({
       date: new Date('2021-05-15T02:00:00.000Z'),
+      user_id: '1111',
       provider_id: '123456781',
     });
 
     await createAppointmentService.execute({
       date: new Date('2021-05-15T03:00:00.000Z'),
+      user_id: '1111',
       provider_id: '123456789',
     });
 
