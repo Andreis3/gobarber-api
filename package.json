@@ -8,6 +8,7 @@
     "dev:server": "ts-node-dev -r tsconfig-paths/register --inspect --transpileOnly --ignore-watch node_modules src/shared/infra/http/server.ts",
     "start": "ts-node -r tsconfig-paths/register src/shared/infra/http/server.ts",
     "docker:postgres": "docker run --name gostack_postgres -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres",
+    "docker:mongo": "docker run --name gostack_mongo -p 27017:27017 -d -t mongo",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
     "test": "jest"
   },
@@ -19,6 +20,7 @@
     "express-async-errors": "^3.1.1",
     "handlebars": "^4.7.6",
     "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.5.7",
     "multer": "^1.4.2",
     "nodemailer": "^6.4.6",
     "pg": "^8.0.2",
