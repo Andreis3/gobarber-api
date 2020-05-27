@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { celebrate, Segments, Joi } from 'celebrate';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 
@@ -15,7 +16,16 @@ appointmentsRoutes.use(ensureAuthenticated);
 
 appointmentsRoutes.get('/', appointmentsController.findAllAppointments);
 
-appointmentsRoutes.post('/', appointmentsController.createAppointment);
+appointmentsRoutes.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      provider_id: Joi.string().uuid().required(),
+      date: Joi.date(),
+    },
+  }),
+  appointmentsController.createAppointment,
+);
 
 appointmentsRoutes.get(
   '/provider-logger',
