@@ -25,7 +25,7 @@
     "database": "gostack_gobarber",
     "useUnifiedTopology": true,
     "entities": [
-      "./src/@modules/**/infra/typeorm/schemas/*.ts"
+      "./src/modules/**/infra/typeorm/schemas/*.ts"
     ]
   }
 ]

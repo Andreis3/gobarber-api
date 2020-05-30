@@ -1,6 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
 import IUserRepository from '@modules/users/repositories/IUsersRepository';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
 import User from '@modules/users/infra/typeorm/entities/Users';
 
@@ -22,27 +23,41 @@ class ListProviderService {
   constructor(
     @inject('UsersRepository')
     private userRepository: IUserRepository,
+
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({ user_id }: IRequest): Promise<User[] | IUsers[]> {
-    const usersAll = await this.userRepository.findAllProviders({
-      except_user_id: user_id,
-    });
-
-    const users = usersAll.reduce<IUsers[]>(
-      (prev, curr) => [
-        ...prev,
-        {
-          id: curr.id,
-          name: curr.name,
-          email: curr.email,
-          avatar: curr.avatar,
-          created_at: curr.created_at,
-          updated_at: curr.updated_at,
-        },
-      ],
-      [],
+    let users = await this.cacheProvider.recover<IUsers[]>(
+      `providers-list:${user_id}`,
     );
+
+    if (!users) {
+      users = await this.userRepository.findAllProviders({
+        except_user_id: user_id,
+      });
+
+      users = users.reduce<IUsers[]>(
+        (prev, curr) => [
+          ...prev,
+          {
+            id: curr.id,
+            name: curr.name,
+            email: curr.email,
+            avatar: curr.avatar,
+            created_at: curr.created_at,
+            updated_at: curr.updated_at,
+          },
+        ],
+        [],
+      );
+
+      console.log('a query no banco foi feita');
+
+      await this.cacheProvider.save(`providers-list:${user_id}`, users);
+    }
+
     return users;
   }
 }
