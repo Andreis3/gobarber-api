@@ -1,21 +1,27 @@
 import FakeUserRepository from '@modules/users/repositories/fakes/FakeUserRepository';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
+
 import CreateUserServices from '@modules/users/services/CreateUserServices';
 
 import AppError from '@shared/errors/AppError';
 
 let fakeUserRepository: FakeUserRepository;
 let fakeHashProvider: FakeHashProvider;
+let fakeCacheProvider: FakeCacheProvider;
+
 let createUserServices: CreateUserServices;
 
 describe('CreateAppointmentService', () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUserRepository();
     fakeHashProvider = new FakeHashProvider();
+    fakeCacheProvider = new FakeCacheProvider();
 
     createUserServices = new CreateUserServices(
       fakeUserRepository,
       fakeHashProvider,
+      fakeCacheProvider,
     );
   });
   it('Should be able to create a new user', async () => {
