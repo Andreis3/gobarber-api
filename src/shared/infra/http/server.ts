@@ -8,12 +8,14 @@ import 'express-async-errors';
 
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
+import rateLimiter from '@shared/infra/http/middlewares/rateLimiter';
 import routes from './routes/index';
 
 import '@shared/infra/typeorm';
 import '@shared/container';
 
 const app = express();
+
 app.use(cors());
 
 app.use(express.json());
@@ -28,10 +30,9 @@ function logRequests(request: Request, response: Response, next: NextFunction) {
   console.timeEnd(logLabel);
 }
 
+app.use(rateLimiter);
 app.use(logRequests);
-
 app.use(routes);
-
 app.use(errors());
 
 app.use(
