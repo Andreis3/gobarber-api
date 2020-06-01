@@ -49,6 +49,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     const parsedMonth = String(month).padStart(2, '0');
 
     const appointments = await this.ormRepository.find({
+      relations: ['user'],
       where: {
         provider_id,
         date: Raw(
@@ -60,9 +61,12 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return appointments;
   }
 
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(
+    date: Date,
+    provider_id: string,
+  ): Promise<Appointment | undefined> {
     const findAppointmentByDate = await this.ormRepository.findOne({
-      where: { date },
+      where: { date, provider_id },
     });
 
     return findAppointmentByDate;

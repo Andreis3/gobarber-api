@@ -5554,6 +5554,11 @@ through@2, through@^2.3.6:
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
 
+timemachine@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/timemachine/-/timemachine-0.3.1.tgz#da274fb588fb1c39b96d0770caa23bb26439fda4"
+  integrity sha512-MvXHHZtauhgopkdEnueWQA1uw6ArPs0wxDFuR1QobrFSQcNXtWo1UnuGZMOFNTfMWGBmPPO4VHdKSfDi3VUkxA==
+
 tiny-glob@^0.2.6:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/tiny-glob/-/tiny-glob-0.2.6.tgz#9e056e169d9788fe8a734dfa1ff02e9b92ed7eda"

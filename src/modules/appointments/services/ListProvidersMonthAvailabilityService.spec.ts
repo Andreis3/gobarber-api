@@ -1,7 +1,7 @@
+import timemachine from 'timemachine';
+
 import FakeAppointmentsRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
 import ListProvidersMonthAvailabilityService from '@modules/appointments/services/ListProvidersMonthAvailabilityService';
-
-// import AppError from '@shared/errors/AppError';
 
 let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let listProvidersMonthAvailability: ListProvidersMonthAvailabilityService;
@@ -12,6 +12,14 @@ describe('ListProvidersMonthAvailabilityService', () => {
     listProvidersMonthAvailability = new ListProvidersMonthAvailabilityService(
       fakeAppointmentsRepository,
     );
+
+    timemachine.config({
+      dateString: 'May 10, 2020 12:00:00',
+    });
+  });
+
+  afterEach(() => {
+    timemachine.reset();
   });
 
   it('Should be able to list the month availability from provider', async () => {
