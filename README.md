@@ -1,71 +1,111 @@
-# Recuperação de senha
+# NodeJs, Typescript, TDD, SOLID
 
-**RF**
+# Gostack BootCamp
 
-- Usuário deve poder recuperar sua senha informando o seu e-mail;
-- Usuário deve receber um e-mail com instruções de recuperação de senha;
-- Usuário deve poder resetar sua senha
-
-**RNF**
-
-- Utilizar Mailtrap para testar envios em ambiente de dev;
-- Utilizar Amazon ses para envios em produção;
-- O envio de e-mails deve acontecer em segundo plano (backgrond job);
-
-**RN**
-
-- O link enviado por email para resetar senha, deve expirar em 2h;
-- O usuário precisa confirmar a nova senha ao resetar sua senha;
+[![NPM Version][npm-image]][npm-url]
+[![Build Status][travis-image]][travis-url]
+[![Downloads Stats][npm-downloads]][npm-url]
 
 
-# Atualização de perfil
+Clean Architecture for node.js projects
 
-**RF**
+Folder Structure
+├── src
+│   ├── @types                              # typing file            
+│   ├── config                              # configuration files eg: cahe, email, upload etc ...
+│   ├── modules
+│   │   ├── appointments              
+|   |   |    ├── dtos                       # data object transporter files
+|   |   |    ├── infra                      # domain infrastructure layer
+|   |   |    |    ├── http
+|   |   |    |    |    ├── controllers
+|   |   |    |    |    └── routes
+|   |   |    |    ├── typeorm
+|   |   |    |    |    ├── entities
+|   |   |    |    |    └── respositories
+|   |   |    ├── repositories
+|   |   |    |    └── fakes
+|   |   |    └── services
+│   │   ├── notifications
+|   |   |    ├── dtos                        # data object transporter files
+|   |   |    ├── infra                       # domain infrastructure layer
+|   |   |    |    ├── http                   
+|   |   |    |    |    ├── controllers
+|   |   |    |    |    └── routes
+|   |   |    |    ├── typeorm
+|   |   |    |    |    ├── respositories
+|   |   |    |    |    └── schemas
+|   |   |    ├── repositories
+|   |   |    |    └── fakes
+|   |   |    └── services
+│   │   └── users
+|   |        ├── dtos                        # data object transporter files
+|   |        ├── infra                       # domain infrastructure layer
+|   |        |    ├── http
+|   |        |    |    ├── controllers
+|   |        |    |    └── routes
+|   |        |    ├── typeorm
+|   |        |    |    ├── entities
+|   |        |    |    └── respositories
+|   |        ├── repositories
+|   |        |    └── fakes
+|   |        └── services
+│   └── shared
+|        ├── container                        # responsible for the inversion of dependency
+|        |    └── providers                   # external integration providers
+|        |         ├── CacheProvider
+|        |         |    ├── fakes
+|        |         |    ├── implementations
+|        |         |    ├── models
+|        |         ├── MailProvider
+|        |         |    ├── dtos
+|        |         |    ├── fakes
+|        |         |    ├── implementations
+|        |         |    ├── models
+|        |         ├── MailTemplateProvider
+|        |         |    ├── dtos
+|        |         |    ├── fakes
+|        |         |    ├── implementations
+|        |         |    ├── models
+|        |         └── StorageProvider
+|        |              ├── fakes
+|        |              ├── implementations
+|        |              └── models
+|        ├── errors
+|        └── infra
+|             ├── http
+|             |    ├── middlewares
+|             |    └── routes
+|             └── typeorm
+|                  └── migrations
+└── tmp
 
-- Usuário deve poder atualizar seu nome, email e senha;
 
-**RN**
+## Getting Started
 
-- O usuário não pode alterar seu email para email já utilizado;
-- Para atualizar sua senha, o usuário deve informar a senha antigas;
-- Para atualizar sua senha, o usuário precisa confirmar a nova senha;
+### Step 1: Set up the Development Environment
+
+You need to set up your development environment before you can do anything.
+
+Install [Node.js and NPM](https://nodejs.org/en/download/)
+Install [yarn] (https://classic.yarnpkg.com/en/docs/install/#debian-stable)
+Install [docker] (https://docs.docker.com/get-docker/)
+
+### Install
+
+- Install all dependencies with `yarn install or npm install`
+
+### Running in dev mode
+
+- Run `yarn dev:server` 
+### Running test
+- Test Unit `yarn test`
+### Running docker DB container
+- Docker postgres container `yarn docker:postgres`
+- Docker mongo container `yarn docker:mongo`
+- Docker redis container `yarn docker:redis`
+
+- The server address will be displayed to you as `🚀 Runing service in route: http://localhost:3333`
 
 
-# Painel do pretador
 
-**RF**
-
-- O usuário deve poder listar seus agendamentos de um dia específico;
-- prestador deve receber uma notificação sempre que houver um novo agendamento;
-- O prestador deve poder visualizar as notificações não lidas;
-
-**RNF**
-
-- Os agendamentos do prestador no dia devem ser armazenados em cache;
-- As notificações do prestador devem ser armazenados no MongoDB;
-- As notificações do prestador devem ser enviadas em tempo-real utilizando Socket.io;
-
-**RN**
-
-- A notificação deve ter um status de lida ou não-lida para que o prestador possa controlar;
-
-# Agendamento de serviço
-
-**RF**
-
-- Usuário deve poder listar todos os prestadores de serviço cadastrados;
-- Usuário deve poder listar os dias de um mês com pelo menos um horário disponível de um prestador;
-- Usuário deve poder listar os horários disponiveis em um dia específico de um prestador;
-- O usuário deve poder realizar um novo agendamento com um prestador;
-
-**RNF**
-
-- A lista de prestadores deve ser armazenada em cache;
-
-**RN**
-
-- Cada agendamento deve durar uma 1h exatamente;
-- Os agendamentos devem estar disponiveis entre 8h as 18h(Primeiro às 8h, último às 17h);
-- O usuário não pode agendar em um horário já ocupado;
-- O usuário não pode agendar em horário que já passou;
-- O prestador não pode agendar horário consigo mesmo;
