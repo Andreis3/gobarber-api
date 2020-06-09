@@ -9,7 +9,9 @@
 
 Clean Architecture for node.js projects
 
-Folder Structure
+## Folder Structure
+
+```
 ├── src
 │   ├── @types                              # typing file            
 │   ├── config                              # configuration files eg: cahe, email, upload etc ...
@@ -79,6 +81,8 @@ Folder Structure
 |             └── typeorm
 |                  └── migrations
 └── tmp
+
+```
 
 
 ## Getting Started
